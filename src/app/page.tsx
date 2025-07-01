@@ -14,6 +14,8 @@ export default function Home() {
   const activitiesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const root = document.getElementById("landing-root");
+    if (root) root.style.opacity = "1";
     if (imageRef.current && titleRef.current && descRef.current) {
       gsap.fromTo(
         imageRef.current,
@@ -48,7 +50,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative  flex flex-col items-center justify-center bg-white overflow-x-hidden">
+    <div id="landing-root" className="relative min-h-screen flex flex-col items-center justify-center bg-white overflow-x-hidden opacity-0 transition-opacity duration-300">
       {/* Aurora decorativa arriba, sutil */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 w-[120vw] h-[320px] pointer-events-none z-0 opacity-60" style={{filter: 'blur(2px)'}}>
         <Aurora
