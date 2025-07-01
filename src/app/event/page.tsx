@@ -25,7 +25,7 @@ const schema = z.object({
   birthDate: z.string().min(1, "Fecha requerida"),
   gender: z.enum(["masculino", "femenino", "otro"]),
   country: z.string().min(2, "País requerido"),
-  city: z.string().min(2, "Ciudad requerida"),
+  city: z.string().min(2, "Ciudad requerida").default('venezuela'),
   phone: z.string().min(7, "Teléfono requerido"),
   emergencyContact: z.string().min(2, "Contacto de emergencia requerido"),
   bloodType: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]),
@@ -55,7 +55,9 @@ export default function EventPage() {
     const { data } = await createClient()
       .from("participant")
       .select("*")
-      .order("createdAt", { ascending: false });
+      .order("createdAt", { ascending: false })
+      .limit(20)
+      ;
     setParticipantes(data || []);
     setLoading(false);
   };
@@ -83,7 +85,7 @@ export default function EventPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-emerald-50 flex flex-col items-center py-8 px-2">
+    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-zinc-50 flex flex-col items-center py-8 px-2">
       {/* Logo y título */}
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center border border-gray-100 mb-6">
         <Image
@@ -94,7 +96,7 @@ export default function EventPage() {
           className="mb-4 "
           priority
         />
-        <h1 className="text-3xl font-title font-extrabold text-emerald-600 mb-1 text-center drop-shadow-sm">
+        <h1 className="text-3xl font-title font-extrabold text-zinc-600 mb-1 text-center drop-shadow-sm">
           Inscripción Evento Deportivo
         </h1>
         <p className="text-gray-500 text-center mb-2 text-sm">
@@ -102,7 +104,7 @@ export default function EventPage() {
         </p>
         {/* Mensajes de éxito/error */}
         {success && (
-          <div className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded px-3 py-2 mb-2 animate-fade-in">
+          <div className="flex items-center gap-2 bg-zinc-50 border border-zinc-200 text-zinc-700 rounded px-3 py-2 mb-2 animate-fade-in">
             <CheckCircle className="w-4 h-4" /> ¡Registro exitoso!
           </div>
         )}
@@ -232,10 +234,10 @@ export default function EventPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="mt-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 rounded transition flex items-center justify-center gap-2"
+            className="mt-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded transition flex items-center justify-center gap-2"
           >
             {submitting && (
-              <span className="loader border-white border-t-emerald-500"></span>
+              <span className="loader border-white border-t-green-500"></span>
             )}
             {submitting ? "Registrando..." : "Registrar"}
           </button>
@@ -259,7 +261,7 @@ export default function EventPage() {
           <ul className="text-sm divide-y divide-gray-100 max-h-72 overflow-y-auto">
             {participantes.map((p) => (
               <li key={p.id} className="py-2 flex items-center gap-3">
-                <span className="bg-emerald-100 text-emerald-600 rounded-full p-2">
+                <span className="bg-zinc-100 text-zinc-600 rounded-full p-2">
                   <User className="w-4 h-4" />
                 </span>
                 <div className="flex-1">

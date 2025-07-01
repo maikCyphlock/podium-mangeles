@@ -109,7 +109,7 @@ export default function Home() {
           </div>
         </section>
         <Link href="/event" className="w-full flex justify-center max-w-xs">
-          <RainbowButton>
+          <RainbowButton className="text-lg font-bold" >
             Inscribirse al evento
           </RainbowButton>
         </Link>

@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export function LoginForm() {
   const [username, setUsername] = useState('');
@@ -24,24 +26,30 @@ export function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12, minWidth: 300 }}>
-      <h2>Login Admin</h2>
-      <input
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white shadow-xl rounded-xl p-8 flex flex-col gap-5 min-w-[320px] border border-emerald-100 animate-fade-in"
+    >
+      <h2 className="text-2xl font-bold text-emerald-700 text-center mb-2">Login Admin</h2>
+      <Input
         type="text"
         placeholder="Usuario"
         value={username}
         onChange={e => setUsername(e.target.value)}
         required
+        autoFocus
+        className=""
       />
-      <input
+      <Input
         type="password"
         placeholder="Contraseña"
         value={password}
         onChange={e => setPassword(e.target.value)}
         required
+        className=""
       />
-      <button type="submit">Entrar</button>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      <Button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold">Entrar</Button>
+      {error && <div className="text-red-600 text-center text-sm mt-2 animate-fade-in">{error}</div>}
     </form>
   );
 } 
