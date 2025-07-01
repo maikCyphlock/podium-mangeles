@@ -1,103 +1,121 @@
+"use client"
+import { RainbowButton } from "@/components/magicui/rainbow-button";
 import Image from "next/image";
+import Link from "next/link";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import Aurora from "@/components/reactbits/aurora";
+import MarqueeSponsors from "@/components/reactbits/MarqueeSponsors";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const imageRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const activitiesRef = useRef<HTMLDivElement>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+  useEffect(() => {
+    if (imageRef.current && titleRef.current && descRef.current) {
+      gsap.fromTo(
+        imageRef.current,
+        { opacity: 0, y: 60 },
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+      );
+      gsap.fromTo(
+        titleRef.current,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: "power3.out" }
+      );
+      gsap.fromTo(
+        descRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, delay: 0.9, ease: "power3.out" }
+      );
+    }
+    if (activitiesRef.current) {
+      gsap.fromTo(
+        activitiesRef.current.querySelectorAll('.activity-item'),
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          delay: 1.3,
+          ease: "power3.out"
+        }
+      );
+    }
+  }, []);
+
+  return (
+    <div className="relative  flex flex-col items-center justify-center bg-white overflow-x-hidden">
+      {/* Aurora decorativa arriba, sutil */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 w-[120vw] h-[320px] pointer-events-none z-0 opacity-60" style={{filter: 'blur(2px)'}}>
+        <Aurora
+          colorStops={["#338fff", "#64ff61", "#338fff"]}
+          blend={0.5}
+          amplitude={1.2}
+          speed={0.5}
+        />
+      </div>
+      <main className="relative mt-12 z-10 w-full flex flex-col items-center justify-center">
+        <header className="flex flex-col items-center mb-8 sm:mb-10 w-full max-w-2xl">
+          <div ref={imageRef}>
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/mis-angeles.png"
+              alt="Logo Farmacia Mis Ángeles"
+              width={180}
+              height={180}
+              className="mb-8 sm:mb-12 mx-auto"
+              priority
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </div>
+          <h1
+            ref={titleRef}
+            className="font-title text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-800 mb-2 text-center drop-shadow-sm px-2"
           >
-            Read our docs
-          </a>
-        </div>
+            Evento Deportivo
+          </h1>
+          <p
+            ref={descRef}
+            className="text-base sm:text-lg md:text-xl text-gray-600 text-center max-w-md sm:max-w-xl mx-auto px-2 heading-text "
+          >
+            Únete a la celebración deportiva del día del niño organizada por la <span className="font-semibold text-pink-600">Farmacia Mis Ángeles</span>. Vive una jornada llena de energía, amistad y diversión para los niños de la casa.
+          </p>
+        </header>
+        <section
+          ref={activitiesRef}
+          className="w-full max-w-2xl flex flex-col gap-4 sm:gap-6 md:flex-row md:gap-6 justify-center mb-8 sm:mb-10 px-2"
+        >
+          <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-2 md:gap-0 activity-item bg-white/80 rounded-xl py-3 md:py-6 shadow-sm border border-gray-100">
+            <span className="text-2xl sm:text-3xl mb-0 md:mb-1">
+              <img src="/soccer.png" alt="Futbol" className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32" />
+            </span>
+            <span className="font-medium text-gray-700 text-sm sm:text-base">Fútbol</span>
+          </div>
+          <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-2 md:gap-0 activity-item bg-white/80 rounded-xl py-3 md:py-6 shadow-sm border border-gray-100">
+            <span className="text-2xl sm:text-3xl mb-0 md:mb-1">
+              <img src="/yimcana.png" alt="Yincana" className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32" />
+            </span>
+            <span className="font-medium text-gray-700 text-sm sm:text-base">Yincanas</span>
+          </div>
+          <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-2 md:gap-0 activity-item bg-white/80 rounded-xl py-3 md:py-6 shadow-sm border border-gray-100">
+            <span className="text-2xl sm:text-3xl mb-0 md:mb-1">
+              <img src="running.png" alt="Atletismo" className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32" />
+            </span>
+            <span className="font-medium text-gray-700 text-sm sm:text-base">Atletismo</span>
+          </div>
+        </section>
+        <Link href="/event" className="w-full flex justify-center max-w-xs">
+          <RainbowButton>
+            Inscribirse al evento
+          </RainbowButton>
+        </Link>
+        <MarqueeSponsors />
+        <footer className="mt-12 sm:mt-16 text-xs text-gray-400 text-center w-full px-2">
+          © {new Date().getFullYear()} Farmacia Mis Ángeles. Todos los derechos reservados.
+        </footer>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
