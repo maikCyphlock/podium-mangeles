@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import Aurora from "@/components/reactbits/aurora";
-import MarqueeSponsors from "@/components/reactbits/MarqueeSponsors";
+import Sponsor from "@/components/reactbits/MarqueeSponsors";
 
 export default function Home() {
   const imageRef = useRef<HTMLDivElement>(null);
@@ -111,7 +111,7 @@ export default function Home() {
             Inscribirse al evento
           </RainbowButton>
         </Link>
-        <MarqueeSponsors />
+        <Sponsor />
         <footer className="mt-12 sm:mt-16 text-xs text-gray-400 text-center w-full px-2">
           © {new Date().getFullYear()} Farmacia Mis Ángeles. Todos los derechos reservados.
         </footer>
