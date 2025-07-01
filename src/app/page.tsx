@@ -116,7 +116,7 @@ export default function Home() {
         <Sponsor />
         <footer className="mt-12 sm:mt-16 text-xs text-gray-400 text-center w-full px-2">
           © {new Date().getFullYear()} Farmacia Mis Ángeles. Todos los derechos reservados.
-        </footer>
+      </footer>
       </main>
     </div>
   );
