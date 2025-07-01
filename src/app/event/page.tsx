@@ -25,7 +25,7 @@ const schema = z.object({
   birthDate: z.string().min(1, "Fecha requerida"),
   gender: z.enum(["masculino", "femenino", "otro"]),
   country: z.string().min(2, "País requerido"),
-  city: z.string().min(2, "Ciudad requerida").default('venezuela'),
+  city: z.string().min(2, "Ciudad requerida"),
   phone: z.string().min(7, "Teléfono requerido"),
   emergencyContact: z.string().min(2, "Contacto de emergencia requerido"),
   bloodType: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]),
