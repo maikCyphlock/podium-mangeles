@@ -101,7 +101,7 @@ export default function Home() {
               <img src="/yimcana.png" alt="Yincana" className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 z-10 relative" />
             </span>
             <span className="font-bold text-gray-800 text-lg sm:text-xl md:text-2xl z-10">Yincanas</span>
-            <span className="w-32 h-32 bg-yellow-100 blur-2xl absolute"></span>
+            <span className="w-32 h-32 bg-yellow-50 blur-2xl absolute"></span>
           </div>
           <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-3 md:gap-0 activity-item bg-white/90 rounded-2xl py-5 md:py-8 shadow-lg border border-gray-200 transition-all relative overflow-hidden">
             <span className="mb-0 md:mb-2">
@@ -118,8 +118,18 @@ export default function Home() {
           </RainbowButton>
         </Link>
         <Sponsor />
-        <footer className="mt-12 sm:mt-16 text-xs text-gray-400 text-center w-full px-2">
-          © {new Date().getFullYear()} Farmacia Mis Ángeles. Todos los derechos reservados.
+        <footer className="mt-12 sm:mt-16 w-full px-2 py-6 bg-white border-t border-gray-200 text-center text-xs sm:text-sm text-gray-500 shadow-none">
+          <div>
+            © {new Date().getFullYear()} Farmacia Mis Ángeles
+          </div>
+          <div className="mt-1 flex  items-center justify-center gap-1">
+            <span>
+              Hecho con mucho amor
+            </span>
+            <a href="https://www.instagram.com/maikol_aguilar__/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-semibold">
+              por @maikol aguilar
+            </a>
+          </div>
         </footer>
       </main>
     </div>
