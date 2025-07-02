@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'f@rmaciaM1sAngeles2025'; // Cambia esto por seguridad
+const ADMIN_USER = process.env.ADMIN_USER || 'admin';
+const ADMIN_PASS = process.env.ADMIN_PASS || 'admin123';
 const SESSION_COOKIE = 'admin_session';
 
 export async function POST(request: Request) {
