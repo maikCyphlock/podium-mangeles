@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import * as XLSX from "xlsx";
 import {
   ColumnDef,
   flexRender,
@@ -9,6 +10,7 @@ import {
   getSortedRowModel,
   SortingState,
   useReactTable,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -41,6 +43,27 @@ interface ParticipantsTableProps {
 export function ParticipantsTable({ participants }: ParticipantsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
+
+  const exportToExcel = () => {
+    const filteredRows = table.getFilteredRowModel().rows;
+    const data = filteredRows.map(row => {
+      const p = row.original;
+      return {
+        Nombre: p.firstName,
+        Apellido: p.lastName,
+        Email: p.email,
+        Ciudad: p.city,
+        País: p.country,
+        Teléfono: p.phone,
+        "Tipo de Sangre": p.bloodType,
+        "Fecha de Registro": new Date(p.createdAt).toLocaleString(),
+      };
+    });
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Participantes");
+    XLSX.writeFile(workbook, "participantes.xlsx");
+  };
 
   const columns: ColumnDef<Participant>[] = [
     {
@@ -107,6 +130,24 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    globalFilterFn: (row, columnId, filterValue) => {
+      // Filtro global: busca en todas las columnas relevantes
+      const search = filterValue.toLowerCase();
+      return [
+        row.original.firstName,
+        row.original.lastName,
+        row.original.email,
+        row.original.city,
+        row.original.country,
+        row.original.phone,
+        row.original.bloodType,
+        new Date(row.original.createdAt).toLocaleDateString(),
+      ]
+        .join(" ")
+        .toLowerCase()
+        .includes(search);
+    },
   });
 
   return (
@@ -121,8 +162,16 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
             className="max-w-sm"
           />
         </div>
-        <div className="text-sm text-muted-foreground">
-          {table.getFilteredRowModel().rows.length} participantes
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={exportToExcel}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded text-sm font-semibold"
+          >
+            Exportar a Excel
+          </Button>
+          <div className="text-sm text-muted-foreground">
+            {table.getFilteredRowModel().rows.length} participantes
+          </div>
         </div>
       </div>
 

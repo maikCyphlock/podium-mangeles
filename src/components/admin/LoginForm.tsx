@@ -30,7 +30,7 @@ export function LoginForm() {
       onSubmit={handleSubmit}
       className="bg-white shadow-xl rounded-xl p-8 flex flex-col gap-5 min-w-[320px] border border-emerald-100 animate-fade-in"
     >
-      <h2 className="text-2xl font-bold text-emerald-700 text-center mb-2">Login Admin</h2>
+      <h2 className="text-2xl font-bold text-emerald-700 text-center mb-2">Panel de administración</h2>
       <Input
         type="text"
         placeholder="Usuario"
