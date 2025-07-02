@@ -3,11 +3,12 @@ import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { LogoutButton } from '@/components/admin/LogoutButton';
 export default async function AdminPage() {
-  // Obtener participantes desde Supabase
+  // Obtener participantes desde Supabase (solo los que no están eliminados)
   const supabase = await createClient(cookies());
   const { data: participants, error } = await supabase
     .from('participant')
     .select('*')
+    .is('deleted_at', null)
     .order('createdAt', { ascending: false });
 
   if (error) {

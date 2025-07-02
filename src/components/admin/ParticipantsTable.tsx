@@ -22,7 +22,18 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowUpDown, Search } from "lucide-react";
+import { ArrowUpDown, Search, Trash2, Pencil } from "lucide-react";
+import { createClient } from '@/lib/supabaseClient';
+import { Label } from '@/components/ui/label';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from '@/components/ui/dialog';
+import { validateParticipant, GENDERS, BLOOD_TYPES } from '@/lib/participantValidation';
 
 interface Participant {
   id: string;
@@ -34,6 +45,10 @@ interface Participant {
   phone: string;
   bloodType: string;
   createdAt: string;
+  deleted_at?: string | null;
+  gender: string;
+  birthDate: string;
+  emergencyContact: string;
 }
 
 interface ParticipantsTableProps {
@@ -43,7 +58,23 @@ interface ParticipantsTableProps {
 export function ParticipantsTable({ participants }: ParticipantsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
+  const [editing, setEditing] = useState<Participant | null>(null);
+  const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState<Partial<Participant> | null>(null);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
 
+  // Soft delete
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('¿Seguro que deseas eliminar este participante?')) return;
+    setLoadingId(id);
+    const supabase = createClient();
+    await supabase.from('participant').update({ deleted_at: new Date().toISOString() }).eq('id', id);
+    setLoadingId(null);
+    window.location.reload();
+  };
+
+  // Exportar a Excel (solo filtrados)
   const exportToExcel = () => {
     const filteredRows = table.getFilteredRowModel().rows;
     const data = filteredRows.map(row => {
@@ -55,6 +86,7 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
         Ciudad: p.city,
         País: p.country,
         Teléfono: p.phone,
+        Género: p.gender,
         "Tipo de Sangre": p.bloodType,
         "Fecha de Registro": new Date(p.createdAt).toLocaleString(),
       };
@@ -63,6 +95,64 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Participantes");
     XLSX.writeFile(workbook, "participantes.xlsx");
+  };
+
+  // Al abrir modal de edición, inicializa el formulario y abre el dialog
+  const openEdit = (p: Participant) => {
+    setEditing(p);
+    setEditForm({ ...p });
+    setEditOpen(true);
+    setEditError(null);
+  };
+
+  // Guardar cambios de edición
+  const handleEditSave = async () => {
+    setEditError(null);
+    const validation = validateParticipant(editForm);
+    if (validation) {
+      setEditError(validation);
+      return;
+    }
+    if (!editForm || !editForm.id) return;
+    setLoadingId(editForm.id);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from('participant')
+        .update({
+          firstName: editForm.firstName,
+          lastName: editForm.lastName,
+          email: editForm.email,
+          city: editForm.city,
+          country: editForm.country,
+          phone: editForm.phone,
+          bloodType: editForm.bloodType,
+          gender: editForm.gender,
+          birthDate: editForm.birthDate,
+          emergencyContact: editForm.emergencyContact,
+        })
+        .eq('id', editForm.id);
+      setLoadingId(null);
+      if (error) {
+        if (error.code === '23505' || error.message.toLowerCase().includes('duplicate')) {
+          setEditError('El email ya está registrado.');
+        } else if (error.message.toLowerCase().includes('check constraint')) {
+          setEditError('Valor inválido para género o tipo de sangre.');
+        } else if (error.message.toLowerCase().includes('not-null')) {
+          setEditError('Todos los campos son obligatorios.');
+        } else {
+          setEditError('Error al guardar los cambios. Intenta de nuevo.');
+        }
+        return;
+      }
+      setEditing(null);
+      setEditForm(null);
+      setEditOpen(false);
+      window.location.reload();
+    } catch (e: any) {
+      setLoadingId(null);
+      setEditError('Error de red o inesperado. Intenta de nuevo.');
+    }
   };
 
   const columns: ColumnDef<Participant>[] = [
@@ -105,6 +195,10 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
       header: "Teléfono",
     },
     {
+      accessorKey: "gender",
+      header: "Género",
+    },
+    {
       accessorKey: "bloodType",
       header: "Tipo de Sangre",
     },
@@ -115,6 +209,20 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
         const date = new Date(row.getValue("createdAt"));
         return date.toLocaleDateString();
       },
+    },
+    {
+      id: 'actions',
+      header: 'Acciones',
+      cell: ({ row }) => (
+        <div className="flex gap-2">
+          <Button size="icon" variant="ghost" onClick={() => openEdit(row.original)} title="Editar">
+            <Pencil className="w-4 h-4 text-blue-600" />
+          </Button>
+          <Button size="icon" variant="ghost" onClick={() => handleDelete(row.original.id)} title="Eliminar" disabled={loadingId === row.original.id}>
+            <Trash2 className="w-4 h-4 text-red-600" />
+          </Button>
+        </div>
+      ),
     },
   ];
 
@@ -141,6 +249,7 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
         row.original.city,
         row.original.country,
         row.original.phone,
+        row.original.gender,
         row.original.bloodType,
         new Date(row.original.createdAt).toLocaleDateString(),
       ]
@@ -150,6 +259,7 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
     },
   });
 
+  // Modal de edición con shadcn Dialog
   return (
     <div className="w-full space-y-4">
       <div className="flex items-center justify-between">
@@ -251,6 +361,68 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
           </Button>
         </div>
       </div>
+
+      <Dialog open={editOpen} onOpenChange={open => { setEditOpen(open); if (!open) { setEditing(null); setEditForm(null); setEditError(null); } }}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Editar Participante</DialogTitle>
+          </DialogHeader>
+          {editing && editForm && (
+            <form
+              onSubmit={e => { e.preventDefault(); handleEditSave(); }}
+              className="flex flex-col gap-3 mt-2"
+            >
+              {editError && <div className="text-red-600 text-sm mb-2 animate-fade-in">{editError}</div>}
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <Label>Nombre</Label>
+                  <Input value={editForm.firstName || ''} onChange={e => setEditForm(f => ({ ...f, firstName: e.target.value }))} required />
+                </div>
+                <div className="flex-1">
+                  <Label>Apellido</Label>
+                  <Input value={editForm.lastName || ''} onChange={e => setEditForm(f => ({ ...f, lastName: e.target.value }))} required />
+                </div>
+              </div>
+              <Label>Email</Label>
+              <Input type="email" value={editForm.email || ''} onChange={e => setEditForm(f => ({ ...f, email: e.target.value }))} required />
+              <Label>Ciudad</Label>
+              <Input value={editForm.city || ''} onChange={e => setEditForm(f => ({ ...f, city: e.target.value }))} required />
+              <Label>País</Label>
+              <Input value={editForm.country || ''} onChange={e => setEditForm(f => ({ ...f, country: e.target.value }))} required />
+              <Label>Teléfono</Label>
+              <Input value={editForm.phone || ''} onChange={e => setEditForm(f => ({ ...f, phone: e.target.value }))} required />
+              <Label>Género</Label>
+              <select
+                value={editForm.gender || ''}
+                onChange={e => setEditForm(f => ({ ...f, gender: e.target.value }))}
+                required
+                className="input"
+              >
+                <option value="">Selecciona</option>
+                {GENDERS.map(g => <option key={g} value={g}>{g}</option>)}
+              </select>
+              <Label>Tipo de Sangre</Label>
+              <select
+                value={editForm.bloodType || ''}
+                onChange={e => setEditForm(f => ({ ...f, bloodType: e.target.value }))}
+                required
+                className="input"
+              >
+                <option value="">Selecciona</option>
+                {BLOOD_TYPES.map(b => <option key={b} value={b}>{b}</option>)}
+              </select>
+              <DialogFooter className="mt-4">
+                <DialogClose asChild>
+                  <Button variant="outline" type="button" onClick={() => { setEditing(null); setEditForm(null); setEditOpen(false); setEditError(null); }}>Cancelar</Button>
+                </DialogClose>
+                <Button type="submit" disabled={loadingId === editForm.id} className="bg-emerald-600 text-white">
+                  {loadingId === editForm.id ? 'Guardando...' : 'Guardar'}
+                </Button>
+              </DialogFooter>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
