@@ -52,7 +52,7 @@ export default function Home() {
   return (
     <div id="landing-root" className="relative min-h-screen flex flex-col items-center justify-center bg-white overflow-x-hidden opacity-0 transition-opacity duration-300">
       {/* Aurora decorativa arriba, sutil */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 w-[120vw] h-[320px] pointer-events-none z-0 opacity-60" style={{filter: 'blur(2px)'}}>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 w-[120vw] h-[320px] pointer-events-none z-0 opacity-60" style={{ filter: 'blur(2px)' }}>
         <Aurora
           colorStops={["#338fff", "#64ff61", "#338fff"]}
           blend={0.5}
@@ -61,7 +61,7 @@ export default function Home() {
         />
       </div>
       <main className="relative mt-12 z-10 w-full flex flex-col items-center justify-center">
-        <header className="flex flex-col items-center mb-8 sm:mb-10 w-full max-w-2xl">
+        <header className="flex flex-col items-center mb-12 sm:mb-10 w-full max-w-2xl">
           <div ref={imageRef}>
             <Image
               src="/mis-angeles.png"
@@ -87,25 +87,29 @@ export default function Home() {
         </header>
         <section
           ref={activitiesRef}
-          className="w-full max-w-2xl flex flex-col gap-4 sm:gap-6 md:flex-row md:gap-6 justify-center mb-8 sm:mb-10 px-2"
+          className="w-full max-w-2xl flex flex-col gap-5 sm:gap-6 md:flex-row md:gap-6 justify-center mb-8 sm:mb-10 px-2"
         >
-          <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-2 md:gap-0 activity-item bg-white/80 rounded-xl py-3 md:py-6 shadow-sm border border-gray-100">
-            <span className="text-2xl sm:text-3xl mb-0 md:mb-1">
-              <img src="/soccer.png" alt="Futbol" className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32" />
+          <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-3 md:gap-0 activity-item bg-white/90 rounded-2xl py-5 md:py-8 shadow-lg border border-gray-200 transition-all relative overflow-hidden">
+            <span className="mb-0 md:mb-2">
+              <img src="/soccer.png" alt="Futbol" className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 z-10 relative" />
             </span>
-            <span className="font-medium text-gray-700 text-sm sm:text-base">Fútbol</span>
+            <span className="font-bold text-gray-800 text-lg sm:text-xl md:text-2xl z-10">Fútbol</span>
+            <span className="w-32 h-32 bg-pink-200 blur-2xl absolute"></span>
           </div>
-          <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-2 md:gap-0 activity-item bg-white/80 rounded-xl py-3 md:py-6 shadow-sm border border-gray-100">
-            <span className="text-2xl sm:text-3xl mb-0 md:mb-1">
-              <img src="/yimcana.png" alt="Yincana" className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32" />
+          <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-3 md:gap-0 activity-item bg-white/90 rounded-2xl py-5 md:py-8 shadow-lg border border-gray-200 transition-all relative overflow-hidden">
+            <span className="mb-0 md:mb-2">
+              <img src="/yimcana.png" alt="Yincana" className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 z-10 relative" />
             </span>
-            <span className="font-medium text-gray-700 text-sm sm:text-base">Yincanas</span>
+            <span className="font-bold text-gray-800 text-lg sm:text-xl md:text-2xl z-10">Yincanas</span>
+            <span className="w-32 h-32 bg-yellow-100 blur-2xl absolute"></span>
           </div>
-          <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-2 md:gap-0 activity-item bg-white/80 rounded-xl py-3 md:py-6 shadow-sm border border-gray-100">
-            <span className="text-2xl sm:text-3xl mb-0 md:mb-1">
-              <img src="running.png" alt="Atletismo" className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32" />
+          <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-3 md:gap-0 activity-item bg-white/90 rounded-2xl py-5 md:py-8 shadow-lg border border-gray-200 transition-all relative overflow-hidden">
+            <span className="mb-0 md:mb-2">
+              <img src="running.png" alt="Atletismo" className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 z-10 relative" />
             </span>
-            <span className="font-medium text-gray-700 text-sm sm:text-base">Atletismo</span>
+            <span className="font-bold text-gray-800 text-lg sm:text-xl md:text-2xl z-10">Atletismo</span>
+
+            <span className="w-32 h-32 bg-blue-200 blur-2xl absolute"></span>
           </div>
         </section>
         <Link href="/event" className="w-full flex justify-center max-w-xs">
@@ -116,7 +120,7 @@ export default function Home() {
         <Sponsor />
         <footer className="mt-12 sm:mt-16 text-xs text-gray-400 text-center w-full px-2">
           © {new Date().getFullYear()} Farmacia Mis Ángeles. Todos los derechos reservados.
-      </footer>
+        </footer>
       </main>
     </div>
   );
