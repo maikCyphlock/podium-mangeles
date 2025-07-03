@@ -10,13 +10,14 @@ import Sponsor from "@/components/reactbits/MarqueeSponsors";
 export default function Home() {
   const imageRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLSpanElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
   const activitiesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const root = document.getElementById("landing-root");
     if (root) root.style.opacity = "1";
-    if (imageRef.current && titleRef.current && descRef.current) {
+    if (imageRef.current && titleRef.current && subtitleRef.current && descRef.current) {
       gsap.fromTo(
         imageRef.current,
         { opacity: 0, y: 60 },
@@ -24,13 +25,18 @@ export default function Home() {
       );
       gsap.fromTo(
         titleRef.current,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: "power3.out" }
+        { opacity: 0, y: 40, scale: 0.8, rotate: -5 },
+        { opacity: 1, y: 0, scale: 1, rotate: 0, duration: 1, delay: 0.5, ease: "power3.out" }
+      );
+      gsap.fromTo(
+        subtitleRef.current,
+        { opacity: 0, scale: 0.7, rotate: 8 },
+        { opacity: 1, scale: 1, rotate: 0, duration: 1, delay: 0.8, ease: "back.out(1.7)" }
       );
       gsap.fromTo(
         descRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, delay: 0.9, ease: "power3.out" }
+        { opacity: 0, y: 20, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 1, delay: 1.1, ease: "bounce.out" }
       );
     }
     if (activitiesRef.current) {
@@ -79,6 +85,7 @@ export default function Home() {
           >
             EVENTO DEPORTIVO
             <span
+              ref={subtitleRef}
               className="block text-4xl sm:text-5xl md:text-6xl font-extrabold text-zinc-700  drop-shadow-lg tracking-tight leading-tight mt-2 mb-4"
             >
               "ÁNGELES CAMPEONES"
@@ -88,7 +95,7 @@ export default function Home() {
           <p
             className="text-base sm:text-lg md:text-xl text-gray-700 text-center max-w-md sm:max-w-xl mx-auto px-2 heading-text font-medium mb-4"
           >
-            Únete a la celebración deportiva en celebración del Dia del Niño organizada por la <span className="font-semibold text-pink-600">Farmacia Mis Ángeles</span>.
+            Únete al evento deportivo en celebración del Dia del Niño organizada por la <span className="font-semibold text-pink-600">Farmacia Mis Ángeles</span>.
           </p>
         </header>
         {/* Bloque de información clave */}
