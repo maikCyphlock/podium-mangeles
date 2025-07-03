@@ -88,7 +88,7 @@ export default function Home() {
           <p
             className="text-base sm:text-lg md:text-xl text-gray-700 text-center max-w-md sm:max-w-xl mx-auto px-2 heading-text font-medium mb-4"
           >
-            Únete a la celebración deportiva organizada por la <span className="font-semibold text-pink-600">Farmacia Mis Ángeles</span>.
+            Únete a la celebración deportiva en celebración del Dia del Niño organizada por la <span className="font-semibold text-pink-600">Farmacia Mis Ángeles</span>.
           </p>
         </header>
         {/* Bloque de información clave */}
