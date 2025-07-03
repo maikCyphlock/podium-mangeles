@@ -175,10 +175,10 @@ export default function Home() {
           </div>
           <div className="mt-2 flex items-center justify-center gap-2">
             <span>
-              Hecho con mucho amor
+              Hecho por
             </span>
             <a href="https://www.instagram.com/maikol_aguilar__/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-semibold">
-              por @maikol aguilar
+              @maikol aguilar
             </a>
           </div>
         </footer>
