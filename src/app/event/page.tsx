@@ -103,13 +103,13 @@ export default function EventPage() {
     <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-zinc-50 flex flex-col items-center py-8 px-2">
       {/* Logo y título */}
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center border border-gray-100 mb-6">
-        <Image
+        <img
           src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751556963/mis-angeles/y9bmp5ublnwte7v1ie7h.png"
           alt="Logo Farmacia Mis Ángeles"
           width={90}
           height={90}
           className="mb-4 "
-          priority
+        
         />
         <h1 className="text-3xl font-title font-extrabold text-zinc-600 mb-1 text-center drop-shadow-sm">
           Inscripción Evento Deportivo
