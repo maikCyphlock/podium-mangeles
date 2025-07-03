@@ -8,7 +8,7 @@ import Image from "next/image";
 import { CheckCircle, AlertCircle, User, Droplet } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
+import TurnstileWidget from "@/components/TurnstileWidget";
 const genderOptions = [
   { value: "masculino", label: "Masculino" },
   { value: "femenino", label: "Femenino" },
@@ -71,15 +71,29 @@ export default function EventPage() {
     setSuccess(false);
     setErrorMsg("");
     setSubmitting(true);
-    const { error } = await createClient().from("participant").insert([data]);
+    // Obtener el token de Turnstile
+    const captchaInput = document.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement | null;
+    const captchaToken = captchaInput?.value;
+    if (!captchaToken) {
+      setErrorMsg("Por favor resuelve el captcha.");
+      setSubmitting(false);
+      return;
+    }
+    // Enviar datos y token al backend
+    const res = await fetch("/api/event-register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...data, captchaToken }),
+    });
+    const result = await res.json();
     setSubmitting(false);
-    if (!error) {
+    if (res.ok && result.ok) {
       setSuccess(true);
       reset();
       fetchParticipantes();
-      setTimeout(() => setSuccess(false), 3000); // Oculta mensaje de éxito tras 3s
+      setTimeout(() => setSuccess(false), 3000);
     } else {
-      setErrorMsg("Error al registrar. Intenta de nuevo.");
+      setErrorMsg(result.error || "Error al registrar. Intenta de nuevo.");
       setTimeout(() => setErrorMsg(""), 4000);
     }
   };
@@ -231,6 +245,7 @@ export default function EventPage() {
             <span className="text-xs text-gray-400">Nombre y teléfono de la persona a contactar en caso de emergencia.</span>
             {errors.emergencyContact && <span className="error">{errors.emergencyContact.message}</span>}
           </div>
+          <TurnstileWidget sitekey="0x4AAAAAABjQeI7rlk0t6Vs0"></TurnstileWidget>
           <button
             type="submit"
             disabled={submitting}

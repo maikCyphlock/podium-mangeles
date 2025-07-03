@@ -48,6 +48,7 @@ export function LoginForm() {
         required
         className=""
       />
+      <div className="cf-turnstile" data-sitekey="0x4AAAAAABjQeI7rlk0t6Vs0"></div>
       <Button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold">Entrar</Button>
       {error && <div className="text-red-600 text-center text-sm mt-2 animate-fade-in">{error}</div>}
     </form>

@@ -5,6 +5,7 @@ import "@fontsource/quicksand/500.css";
 import "@fontsource/quicksand/700.css";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs';
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "Evento Deportivo Mis Ángeles",
@@ -21,6 +22,14 @@ export default function RootLayout({
       <body
         className="font-quicksand antialiased"
       >
+        <Head>
+        <script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback"
+          async
+          defer
+        ></script>
+        </Head>
+        
         <ClerkProvider>
           {children}
         </ClerkProvider>
