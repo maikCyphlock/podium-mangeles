@@ -95,7 +95,7 @@ export default function Home() {
               <div className="text-gray-600 text-sm">Desde las 8:30 am</div>
             </div>
           </div>
-          <div className="flex items-center gap-3 bg-green-50 rounded-xl p-4 shadow activity-item">
+          <div className="flex items-center gap-3 bg-zinc-50 rounded-xl p-4 shadow activity-item">
             <span className="text-2xl">
             <img src="map.png" className="w-14" alt="" />
             </span>
@@ -104,7 +104,7 @@ export default function Home() {
               <div className="text-gray-600 text-sm">Pista de atletismo, Araure</div>
             </div>
           </div>
-          <div className="flex items-center gap-3 bg-green-50 rounded-xl p-4 shadow activity-item">
+          <div className="flex items-center gap-3 bg-zinc-50 rounded-xl p-4 shadow activity-item">
             <span className="text-2xl">
               <img src="toddler.png" className="w-14" alt="" />
             </span>
