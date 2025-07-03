@@ -104,7 +104,7 @@ export default function EventPage() {
       {/* Logo y título */}
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center border border-gray-100 mb-6">
         <Image
-          src="/mis-angeles.png"
+          src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751556963/mis-angeles/y9bmp5ublnwte7v1ie7h.png"
           alt="Logo Farmacia Mis Ángeles"
           width={90}
           height={90}
