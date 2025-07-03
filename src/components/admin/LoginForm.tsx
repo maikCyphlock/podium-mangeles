@@ -20,6 +20,7 @@ export function LoginForm() {
     });
     if (res.ok) {
       router.push('/admin');
+      window.location.href = "/admin";
     } else {
       setError('Usuario o contraseña incorrectos');
     }

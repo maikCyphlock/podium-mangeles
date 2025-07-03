@@ -2,7 +2,23 @@ import { ParticipantsTable } from '@/components/admin/ParticipantsTable';
 import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { LogoutButton } from '@/components/admin/LogoutButton';
-export default async function AdminPage() {
+import jwt from 'jsonwebtoken';
+import { redirect } from 'next/navigation';
+
+export default async function Page() {
+  // Comprobar JWT en cookie
+  const cookieStore = await cookies();
+  const token = await cookieStore.get('admin_token')?.value;
+ 
+  const JWT_SECRET = process.env.JWT_SECRET!;
+  if (!token) {
+    redirect('/admin/login');
+  }
+  try {
+    jwt.verify(token, JWT_SECRET);
+  } catch (e) {
+    redirect('/admin/login');
+  }
   // Obtener participantes desde Supabase (solo los que no están eliminados)
   const supabase = await createClient(cookies());
   const { data: participants, error } = await supabase

@@ -18,8 +18,8 @@ export function middleware(request: NextRequest) {
     !pathname.startsWith('/admin/api');
 
   if (isAdminRoute) {
-    const session = request.cookies.get('admin_session');
-    if (!session || session.value !== 'valid') {
+    const session = request.cookies.get('admin_token');
+    if (!session) {
       const loginUrl = request.nextUrl.clone();
       loginUrl.pathname = '/admin/login';
       loginUrl.search = '';

@@ -1,32 +1,39 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import jwt from 'jsonwebtoken';
 import { createClient } from '@/lib/supabase/server';
 
-export async function POST(request: Request) {
-  const response = NextResponse.json({ ok: true });
-  response.cookies.set('admin_session', '', {
-    httpOnly: true,
-    path: '/',
-    maxAge: 0,
-    sameSite: 'lax',
-  });
+const JWT_SECRET = process.env.JWT_SECRET!;
+const JWT_COOKIE = 'admin_token';
 
-  // Registro de log de logout
+export async function POST(request: Request) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(JWT_COOKIE)?.value;
+  if (!token) {
+    return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+  }
   try {
-    const cookieStore = cookies();
-    const supabase = await createClient(cookieStore);
-    // Intentar obtener el usuario de la cookie (si existiera)
-    const user_id = null; // Puedes mejorar esto si guardas el usuario en la sesión
+    jwt.verify(token, JWT_SECRET);
+    // Eliminar la cookie
+    const response = NextResponse.json({ ok: true });
+    response.cookies.set(JWT_COOKIE, '', {
+      httpOnly: true,
+      path: '/',
+      maxAge: 0,
+      sameSite: 'lax',
+    });
+
+    // Registro de log de logout
+    const supabase = await createClient(cookies());
     await supabase.from('activity_logs').insert([
       {
-        user_id,
+        user_id: 'admin',
         action: 'logout',
-        details: { }
+        details: { ip: request.headers.get('x-forwarded-for') || '' }
       }
     ]);
+    return response;
   } catch (e) {
-    console.error(e)
+    return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
   }
-
-  return response;
 } 
