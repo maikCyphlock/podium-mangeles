@@ -1,8 +1,8 @@
 export default function Sponsor() {
   return (
-    <div className="w-full flex flex-col  mt-12 items-center justify-center py-6 bg-white/80 border-t border-b border-gray-100">
-      <span className="text-sm font-bold text-gray-500 ">Patrocinado por:</span>
-      <div className="flex gap-8 flex-wrap items-center justify-center">
+    <div className="w-full flex flex-col  mt-12 items-center justify-center py-6 bg-white/80 border-b border-gray-100">
+      <span className="text-md font-title font-normal text-zinc-400 ">Patrocinado por</span>
+      <div className="flex gap-8 w-full border-t border-b my-6 flex-wrap items-center justify-center">
      
       <a href="https://www.instagram.com/apssanrafael/" target="_blank">
       <img

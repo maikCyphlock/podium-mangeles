@@ -118,7 +118,7 @@ export default function Home() {
             <img src="cash.png" className="w-14" alt="" />
             </span>
             <div>
-              <div className="font-bold text-green-700">Evento TOTALMENTE GRATIS</div>
+              <div className="font-bold text-green-700">TOTALMENTE GRATIS</div>
             </div>
           </div>
         </section>
@@ -150,12 +150,12 @@ export default function Home() {
           </div>
         </section>
         <Link href="/event" className="w-full flex justify-center max-w-xs">
-          <RainbowButton className="text-lg font-bold" >
+          <RainbowButton className="text-lg font-bold hover:scale-110" >
             ¡INSCRIBETE YA!
           </RainbowButton>
         </Link>
         <Sponsor />
-        <footer className="mt-12 sm:mt-16 w-full px-2 py-6 bg-white border-t border-gray-200 text-center text-xs sm:text-sm text-gray-500 shadow-none">
+        <footer className="mt-12 sm:mt-16 w-full px-2 py-6 bg-white border-t border-gray-200 text-center text-xs sm:text-sm text-gray-500 shadow-none bg-zinc-900 text-zinc-100">
           <div>
             © {new Date().getFullYear()} Farmacia Mis Ángeles
           </div>
