@@ -55,6 +55,7 @@ export default function EventPage() {
     const { data } = await createClient()
       .from("participant")
       .select("*")
+      .is('deleted_at', null)
       .order("createdAt", { ascending: false })
       .limit(20)
       ;
