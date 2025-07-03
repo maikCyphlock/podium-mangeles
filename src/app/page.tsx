@@ -70,13 +70,13 @@ export default function Home() {
       <main className="relative mt-20 z-10 w-full flex flex-col items-center justify-center gap-12">
         <header className="flex flex-col items-center mb-12 w-full max-w-2xl gap-4">
           <div ref={imageRef} className="mb-8">
-            <Image
-              src="/mis-angeles.png"
+            <img
+              src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751556963/mis-angeles/y9bmp5ublnwte7v1ie7h.png"
               alt="Logo Farmacia Mis Ángeles"
               width={180}
               height={180}
               className="mb-6 mx-auto"
-              priority
+             
             />
           </div>
           <h1
@@ -86,7 +86,7 @@ export default function Home() {
             EVENTO DEPORTIVO
             <span
               ref={subtitleRef}
-              className="block text-4xl sm:text-5xl md:text-6xl font-extrabold text-zinc-700  drop-shadow-lg tracking-tight leading-tight mt-2 mb-4"
+              className="block text-4xl sm:text-5xl md:text-6xl font-extrabold text-zinc-800  drop-shadow-lg tracking-tight leading-tight mt-2 mb-4"
             >
               "ÁNGELES CAMPEONES"
             </span>
@@ -102,7 +102,7 @@ export default function Home() {
         <section className="w-full max-w-2xl grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 p-2">
           <div className="flex items-center gap-4 bg-zinc-50 rounded-xl p-6 shadow activity-item">
             <span className="text-2xl">
-              <img src="/calendar.png" className="w-14" alt="" />
+              <img src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751557024/mis-angeles/hhb64ab71lcwk08yojrz.png" className="w-14" alt="" />
             </span>
             <div>
               <div className="font-bold text-gray-800">Sábado 26 de julio</div>
@@ -111,7 +111,7 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-4 bg-zinc-50 rounded-xl p-6 shadow activity-item">
             <span className="text-2xl">
-              <img src="/map.png" className="w-14" alt="" />
+              <img src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751557048/mis-angeles/f0rxqhxzmtkj8yhxat4k.png" className="w-14" alt="" />
             </span>
             <div>
               <div className="font-bold text-gray-800">Estadio José Antonio Páez</div>
@@ -120,7 +120,7 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-4 bg-zinc-50 rounded-xl p-6 shadow activity-item">
             <span className="text-2xl">
-              <img src="/toddler.png" className="w-14" alt="" />
+              <img src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751557070/mis-angeles/txafh7y3temxmrzxv4bh.png" className="w-14" alt="" />
             </span>
             <div>
               <div className="font-bold text-gray-800">Niños y niñas</div>
@@ -129,7 +129,7 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-4 bg-zinc-50 rounded-xl p-6 shadow activity-item">
             <span className="text-2xl">
-              <img src="/cash.png" className="w-14" alt="" />
+              <img src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751557047/mis-angeles/ohsjbhdqvttmexhor0du.png" className="w-14" alt="" />
             </span>
             <div>
               <div className="font-bold text-green-700">TOTALMENTE GRATIS</div>
@@ -145,19 +145,19 @@ export default function Home() {
           <div ref={activitiesRef} className="w-full flex flex-col gap-8 sm:gap-10 md:flex-row md:gap-10 justify-center mb-2 px-2">
             <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-4 md:gap-0 activity-item bg-white/90 rounded-2xl py-8 md:py-12 shadow-lg border border-gray-200 transition-all relative overflow-hidden">
               <span className="mb-0 md:mb-2">
-                <img src="/soccer.png" alt="Fútbol" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 z-10 relative" />
+                <img src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751557047/mis-angeles/uhu3k5j4yttgklspc8fm.png" alt="Fútbol" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 z-10 relative" />
               </span>
               <span className="font-bold text-gray-800 text-lg sm:text-xl md:text-2xl z-10">Fútbol</span>
             </div>
             <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-4 md:gap-0 activity-item bg-white/90 rounded-2xl py-8 md:py-12 shadow-lg border border-gray-200 transition-all relative overflow-hidden">
               <span className="mb-0 md:mb-2">
-                <img src="/yimcana.png" alt="Yincana" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 z-10 relative" />
+                <img src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751557074/mis-angeles/yfeizv7crotqjo739zae.png" alt="Yincana" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 z-10 relative" />
               </span>
               <span className="font-bold text-gray-800 text-lg sm:text-xl md:text-2xl z-10">Yincanas</span>
             </div>
             <div className="flex-1 flex flex-row md:flex-col items-center justify-center gap-4 md:gap-0 activity-item bg-white/90 rounded-2xl py-8 md:py-12 shadow-lg border border-gray-200 transition-all relative overflow-hidden">
               <span className="mb-0 md:mb-2">
-                <img src="/running.png" alt="Atletismo" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 z-10 relative" />
+                <img src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751557035/mis-angeles/bcqp7cvthlvpepgvlqpe.png" alt="Atletismo" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 z-10 relative" />
               </span>
               <span className="font-bold text-gray-800 text-lg sm:text-xl md:text-2xl z-10">Atletismo</span>
             </div>

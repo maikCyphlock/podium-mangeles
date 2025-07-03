@@ -6,7 +6,7 @@ export default function Sponsor() {
      
       <a href="https://www.instagram.com/apssanrafael/" target="_blank">
       <img
-        src="/patro-1.png"
+        src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751556982/mis-angeles/qxdyvpvozclf3l71muy2.png"
         alt="Patrocinador"
   
 
@@ -16,7 +16,7 @@ export default function Sponsor() {
       </a>
         <a href="https://www.instagram.com/agui_dom/" target="_blank">
         <img
-        src="/aguidom.png"
+        src="https://res.cloudinary.com/dsgixewc9/image/upload/v1751556903/mis-angeles/ha77luh73cctwkllhszz.png"
         alt="Patrocinador"
         
   
