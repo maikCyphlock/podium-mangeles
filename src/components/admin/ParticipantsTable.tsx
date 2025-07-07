@@ -68,10 +68,13 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
   const handleDelete = async (id: string) => {
     if (!window.confirm('¿Seguro que deseas eliminar este participante?')) return;
     setLoadingId(id);
-    const supabase = createClient();
-    await supabase.from('participant').update({ deleted_at: new Date().toISOString() }).eq('id', id);
+    const res = await fetch(`/admin/api/participants?id=${id}`, { method: 'DELETE' });
     setLoadingId(null);
-    window.location.reload();
+    if (res.ok) {
+      window.location.reload();
+    } else {
+      alert('Error al eliminar participante');
+    }
   };
 
   // Exportar a Excel (solo filtrados)
@@ -116,39 +119,21 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
     if (!editForm || !editForm.id) return;
     setLoadingId(editForm.id);
     try {
-      const supabase = createClient();
-      const { error } = await supabase
-        .from('participant')
-        .update({
-          firstName: editForm.firstName,
-          lastName: editForm.lastName,
-          email: editForm.email,
-          city: editForm.city,
-          country: editForm.country,
-          phone: editForm.phone,
-          bloodType: editForm.bloodType,
-          gender: editForm.gender,
-          birthDate: editForm.birthDate,
-          emergencyContact: editForm.emergencyContact,
-        })
-        .eq('id', editForm.id);
+      const res = await fetch(`/admin/api/participants`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editForm)
+      });
       setLoadingId(null);
-      if (error) {
-        if (error.code === '23505' || error.message.toLowerCase().includes('duplicate')) {
-          setEditError('El email ya está registrado.');
-        } else if (error.message.toLowerCase().includes('check constraint')) {
-          setEditError('Valor inválido para género o tipo de sangre.');
-        } else if (error.message.toLowerCase().includes('not-null')) {
-          setEditError('Todos los campos son obligatorios.');
-        } else {
-          setEditError('Error al guardar los cambios. Intenta de nuevo.');
-        }
-        return;
+      if (res.ok) {
+        setEditing(null);
+        setEditForm(null);
+        setEditOpen(false);
+        window.location.reload();
+      } else {
+        const data = await res.json();
+        setEditError(data.error || 'Error al guardar los cambios. Intenta de nuevo.');
       }
-      setEditing(null);
-      setEditForm(null);
-      setEditOpen(false);
-      window.location.reload();
     } catch (e: any) {
       setLoadingId(null);
       setEditError('Error de red o inesperado. Intenta de nuevo.');

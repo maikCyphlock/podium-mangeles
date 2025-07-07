@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
-import { createClient } from '@/lib/supabase/server';
+import { createClientAdmin } from '@/lib/supabase/server';
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 const JWT_COOKIE = 'admin_token';
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     });
 
     // Registro de log de logout
-    const supabase = await createClient(cookies());
+    const supabase = await createClientAdmin(cookies());
     await supabase.from('activity_logs').insert([
       {
         user_id: 'admin',

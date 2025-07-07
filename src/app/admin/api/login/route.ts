@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { createClient } from '@/lib/supabase/server';
+import { createClientAdmin } from '@/lib/supabase/server';
 import jwt from 'jsonwebtoken';
 
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     // Registro de log de login
     try {
       const cookieStore = cookies();
-      const supabase = await createClient(cookieStore);
+      const supabase = await createClientAdmin(cookieStore);
       await supabase.from('activity_logs').insert([
         {
           user_id: username, // No hay user real, usamos username

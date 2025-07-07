@@ -1,5 +1,5 @@
 import { ParticipantsTable } from '@/components/admin/ParticipantsTable';
-import { createClient } from '@/lib/supabase/server';
+import { createClientAdmin } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { LogoutButton } from '@/components/admin/LogoutButton';
 import jwt from 'jsonwebtoken';
@@ -20,7 +20,7 @@ export default async function Page() {
     redirect('/admin/login');
   }
   // Obtener participantes desde Supabase (solo los que no están eliminados)
-  const supabase = await createClient(cookies());
+  const supabase = await createClientAdmin(cookies());
   const { data: participants, error } = await supabase
     .from('participant')
     .select('*')

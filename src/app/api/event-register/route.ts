@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createClientAdmin } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   }
 
   // Insertar participante en Supabase
-  const supabase = await createClient(cookies());
+  const supabase = await createClientAdmin(cookies());
   const { error } = await supabase.from('participant').insert([participantData]);
   if (error) {
     return NextResponse.json({ ok: false, error: 'Error al registrar participante' }, { status: 500 });
