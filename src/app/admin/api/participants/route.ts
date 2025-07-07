@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 const JWT_COOKIE = 'admin_token';
-const ALLOWED_ORIGIN = 'https://mis-angeles.vercel.app/';
+const ALLOWED_ORIGIN = 'https://mis-angeles.vercel.app';
 const isProd = process.env.NODE_ENV === 'production';
 
 function isAllowedOrigin(request: Request) {
