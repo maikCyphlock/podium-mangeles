@@ -55,6 +55,18 @@ interface ParticipantsTableProps {
   participants: Participant[];
 }
 
+// Función para calcular la edad a partir de la fecha de nacimiento
+function calcularEdad(birthDate: string): number {
+  const nacimiento = new Date(birthDate);
+  const hoy = new Date();
+  let edad = hoy.getFullYear() - nacimiento.getFullYear();
+  const m = hoy.getMonth() - nacimiento.getMonth();
+  if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
+    edad--;
+  }
+  return edad;
+}
+
 export function ParticipantsTable({ participants }: ParticipantsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
@@ -193,6 +205,14 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
       cell: ({ row }) => {
         const date = new Date(row.getValue("createdAt"));
         return date.toLocaleDateString();
+      },
+    },
+    {
+      accessorKey: "birthDate",
+      header: "Edad",
+      cell: ({ row }) => {
+        const birthDate = row.getValue("birthDate") as string;
+        return birthDate ? calcularEdad(birthDate) + ' años' : '';
       },
     },
     {
