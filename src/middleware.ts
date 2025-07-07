@@ -1,15 +1,5 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-
-const isPublicRoute = createRouteMatcher(['/event', '/favicon.ico', '/']);
-
-export default clerkMiddleware(async (auth, req) => {
-  if (!isPublicRoute(req)) {
-    await auth.protect();
-  
-  }
-});
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
