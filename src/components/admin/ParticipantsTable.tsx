@@ -103,6 +103,7 @@ export function ParticipantsTable({ participants }: ParticipantsTableProps) {
         Teléfono: p.phone,
         Género: p.gender,
         "Tipo de Sangre": p.bloodType,
+        "Fecha de Nacimiento": p.birthDate ? new Date(p.birthDate).toLocaleDateString() : '',
         "Fecha de Registro": new Date(p.createdAt).toLocaleString(),
       };
     });
