@@ -57,7 +57,7 @@ export default function EventPage() {
       .select("*")
       .is('deleted_at', null)
       .order("createdAt", { ascending: false })
-      .limit(20)
+   
       ;
     setParticipantes(data || []);
     setLoading(false);
