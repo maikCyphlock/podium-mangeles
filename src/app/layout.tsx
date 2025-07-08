@@ -28,9 +28,9 @@ export default function RootLayout({
           async
           defer
         ></script>
-        <Analytics/>
+       
         </Head>
-        
+        <Analytics/>
      
           {children}
   
