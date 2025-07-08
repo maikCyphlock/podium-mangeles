@@ -4,7 +4,7 @@ import "@fontsource/quicksand/400.css";
 import "@fontsource/quicksand/500.css";
 import "@fontsource/quicksand/700.css";
 import "./globals.css";
-import { ClerkProvider } from '@clerk/nextjs';
+import { Analytics } from "@vercel/analytics/next"
 import Head from "next/head";
 
 export const metadata: Metadata = {
@@ -28,11 +28,12 @@ export default function RootLayout({
           async
           defer
         ></script>
+        <Analytics/>
         </Head>
         
-        <ClerkProvider>
+     
           {children}
-        </ClerkProvider>
+  
       </body>
     </html>
   );

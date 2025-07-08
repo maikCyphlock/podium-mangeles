@@ -1,6 +1,5 @@
 "use client"
 import { RainbowButton } from "@/components/magicui/rainbow-button";
-import Image from "next/image";
 import Link from "next/link";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
