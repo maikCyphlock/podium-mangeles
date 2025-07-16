@@ -108,156 +108,175 @@ export default function EventPage() {
           alt="Logo Farmacia Mis Ángeles"
           width={90}
           height={90}
-          className="mb-4 "
-        
+          className="mb-4"
         />
         <h1 className="text-3xl font-title font-extrabold text-zinc-600 mb-1 text-center drop-shadow-sm">
           Inscripción Evento Deportivo
         </h1>
+        
+        {/* Mensaje de inscripciones cerradas */}
+        <div className="w-full bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-yellow-700">
+                El período de inscripción ha finalizado. Gracias por tu interés en nuestro evento.
+              </p>
+            </div>
+          </div>
+        </div>
+        
         <p className="text-gray-500 text-center mb-2 text-sm">
           Completa el formulario para participar. Todos los campos son obligatorios.
         </p>
-        {/* Mensajes de éxito/error */}
-        {success && (
-          <div className="flex items-center gap-2 bg-zinc-50 border border-zinc-200 text-zinc-700 rounded px-3 py-2 mb-2 animate-fade-in">
-            <CheckCircle className="w-4 h-4" /> ¡Registro exitoso!
-          </div>
-        )}
-        {errorMsg && (
-          <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded px-3 py-2 mb-2 animate-fade-in">
-            <AlertCircle className="w-4 h-4" /> {errorMsg}
-          </div>
-        )}
-        {/* Formulario */}
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4 mt-2">
-          <div className="flex gap-2">
-            <div className="flex-1">
-              <Label htmlFor="firstName">Nombre</Label>
+        
+        {/* Formulario deshabilitado */}
+        <div className="w-full opacity-50 pointer-events-none">
+          {success && (
+            <div className="flex items-center gap-2 bg-zinc-50 border border-zinc-200 text-zinc-700 rounded px-3 py-2 mb-2 animate-fade-in">
+              <CheckCircle className="w-4 h-4" /> ¡Registro exitoso!
+            </div>
+          )}
+          {errorMsg && (
+            <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 rounded px-3 py-2 mb-2 animate-fade-in">
+              <AlertCircle className="w-4 h-4" /> {errorMsg}
+            </div>
+          )}
+          
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4 mt-2">
+            <div className="flex gap-2">
+              <div className="flex-1">
+                <Label htmlFor="firstName">Nombre</Label>
+                <Input
+                  id="firstName"
+                  {...register("firstName")}
+                  placeholder="Ej: Juan"
+                  aria-invalid={!!errors.firstName}
+                  autoComplete="given-name"
+                />
+                {errors.firstName && <span className="error">{errors.firstName.message}</span>}
+              </div>
+              <div className="flex-1">
+                <Label htmlFor="lastName">Apellido</Label>
+                <Input
+                  id="lastName"
+                  {...register("lastName")}
+                  placeholder="Ej: Pérez"
+                  aria-invalid={!!errors.lastName}
+                  autoComplete="family-name"
+                />
+                {errors.lastName && <span className="error">{errors.lastName.message}</span>}
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="email">Correo electrónico</Label>
               <Input
-                id="firstName"
-                {...register("firstName")}
-                placeholder="Ej: Juan"
-                aria-invalid={!!errors.firstName}
-                autoComplete="given-name"
+                id="email"
+                {...register("email")}
+                placeholder="Ej: juan.perez@email.com"
+                type="email"
+                aria-invalid={!!errors.email}
+                autoComplete="email"
               />
-              {errors.firstName && <span className="error">{errors.firstName.message}</span>}
+              {errors.email && <span className="error">{errors.email.message}</span>}
             </div>
-            <div className="flex-1">
-              <Label htmlFor="lastName">Apellido</Label>
+            <div>
+              <Label htmlFor="birthDate">Fecha de nacimiento</Label>
               <Input
-                id="lastName"
-                {...register("lastName")}
-                placeholder="Ej: Pérez"
-                aria-invalid={!!errors.lastName}
-                autoComplete="family-name"
+                id="birthDate"
+                {...register("birthDate")}
+                type="date"
+                aria-invalid={!!errors.birthDate}
+                autoComplete="bday"
               />
-              {errors.lastName && <span className="error">{errors.lastName.message}</span>}
+              {errors.birthDate && <span className="error">{errors.birthDate.message}</span>}
             </div>
-          </div>
-          <div>
-            <Label htmlFor="email">Correo electrónico</Label>
-            <Input
-              id="email"
-              {...register("email")}
-              placeholder="Ej: juan.perez@email.com"
-              type="email"
-              aria-invalid={!!errors.email}
-              autoComplete="email"
-            />
-            {errors.email && <span className="error">{errors.email.message}</span>}
-          </div>
-          <div>
-            <Label htmlFor="birthDate">Fecha de nacimiento</Label>
-            <Input
-              id="birthDate"
-              {...register("birthDate")}
-              type="date"
-              aria-invalid={!!errors.birthDate}
-              autoComplete="bday"
-            />
-            {errors.birthDate && <span className="error">{errors.birthDate.message}</span>}
-          </div>
-          <div className="flex gap-2">
-            <div className="flex-1">
-              <Label htmlFor="gender">Género</Label>
-              <select id="gender" {...register("gender")} className={`input ${errors.gender ? "border-red-300" : ""}`} aria-invalid={!!errors.gender}>
-                <option value="">Selecciona</option>
-                {genderOptions.map((g) => (
-                  <option key={g.value} value={g.value}>{g.label}</option>
-                ))}
-              </select>
-              {errors.gender && <span className="error">{errors.gender.message}</span>}
+            <div className="flex gap-2">
+              <div className="flex-1">
+                <Label htmlFor="gender">Género</Label>
+                <select id="gender" {...register("gender")} className={`input ${errors.gender ? "border-red-300" : ""}`} aria-invalid={!!errors.gender}>
+                  <option value="">Selecciona</option>
+                  {genderOptions.map((g) => (
+                    <option key={g.value} value={g.value}>{g.label}</option>
+                  ))}
+                </select>
+                {errors.gender && <span className="error">{errors.gender.message}</span>}
+              </div>
+              <div className="flex-1">
+                <Label htmlFor="bloodType">Tipo de sangre</Label>
+                <select id="bloodType" {...register("bloodType")} className={`input ${errors.bloodType ? "border-red-300" : ""}`} aria-invalid={!!errors.bloodType}>
+                  <option value="">Selecciona</option>
+                  {bloodTypes.map((b) => (
+                    <option key={b} value={b}>{b}</option>
+                  ))}
+                </select>
+                {errors.bloodType && <span className="error">{errors.bloodType.message}</span>}
+              </div>
             </div>
-            <div className="flex-1">
-              <Label htmlFor="bloodType">Tipo de sangre</Label>
-              <select id="bloodType" {...register("bloodType")} className={`input ${errors.bloodType ? "border-red-300" : ""}`} aria-invalid={!!errors.bloodType}>
-                <option value="">Selecciona</option>
-                {bloodTypes.map((b) => (
-                  <option key={b} value={b}>{b}</option>
-                ))}
-              </select>
-              {errors.bloodType && <span className="error">{errors.bloodType.message}</span>}
+            <div>
+              <Label hidden htmlFor="country">País</Label>
+              <Input
+                id="country"
+                {...register("country")}
+                placeholder="Ej: Venezuela"
+                aria-invalid={!!errors.country}
+                value={"Venezuela"}
+                hidden
+                autoComplete="country"
+              />
+              {errors.country && <span className="error">{errors.country.message}</span>}
             </div>
-          </div>
-          <div>
-            <Label hidden htmlFor="country">País</Label>
-            <Input
-              id="country"
-              {...register("country")}
-              placeholder="Ej: Venezuela"
-              aria-invalid={!!errors.country}
-              value={"Venezuela"}
-              hidden
-              autoComplete="country"
-            />
-            {errors.country && <span className="error">{errors.country.message}</span>}
-          </div>
-          <div>
-            <Label htmlFor="city">Ciudad</Label>
-            <Input
-              id="city"
-              {...register("city")}
-              placeholder="Ej: Caracas"
-              aria-invalid={!!errors.city}
-              autoComplete="address-level2"
-            />
-            {errors.city && <span className="error">{errors.city.message}</span>}
-          </div>
-          <div>
-            <Label htmlFor="phone">Teléfono</Label>
-            <Input
-              id="phone"
-              {...register("phone")}
-              placeholder="Ej: 0412-1234567"
-              type="tel"
-              aria-invalid={!!errors.phone}
-              autoComplete="tel"
-            />
-            {errors.phone && <span className="error">{errors.phone.message}</span>}
-          </div>
-          <div>
-            <Label htmlFor="emergencyContact">Contacto de emergencia</Label>
-            <Input
-              id="emergencyContact"
-              {...register("emergencyContact")}
-              placeholder="Ej: María Pérez (madre) 0412-7654321"
-              aria-invalid={!!errors.emergencyContact}
-            />
-            <span className="text-xs text-gray-400">Nombre y teléfono de la persona a contactar en caso de emergencia.</span>
-            {errors.emergencyContact && <span className="error">{errors.emergencyContact.message}</span>}
-          </div>
-          <TurnstileWidget sitekey="0x4AAAAAABjQeI7rlk0t6Vs0"></TurnstileWidget>
-          <button
-            type="submit"
-            disabled={submitting}
-            className="mt-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded transition flex items-center justify-center gap-2"
-          >
-            {submitting && (
-              <span className="loader border-white border-t-green-500"></span>
-            )}
-            {submitting ? "Registrando..." : "Registrar"}
-          </button>
-        </form>
+            <div>
+              <Label htmlFor="city">Ciudad</Label>
+              <Input
+                id="city"
+                {...register("city")}
+                placeholder="Ej: Caracas"
+                aria-invalid={!!errors.city}
+                autoComplete="address-level2"
+              />
+              {errors.city && <span className="error">{errors.city.message}</span>}
+            </div>
+            <div>
+              <Label htmlFor="phone">Teléfono</Label>
+              <Input
+                id="phone"
+                {...register("phone")}
+                placeholder="Ej: 0412-1234567"
+                type="tel"
+                aria-invalid={!!errors.phone}
+                autoComplete="tel"
+              />
+              {errors.phone && <span className="error">{errors.phone.message}</span>}
+            </div>
+            <div>
+              <Label htmlFor="emergencyContact">Contacto de emergencia</Label>
+              <Input
+                id="emergencyContact"
+                {...register("emergencyContact")}
+                placeholder="Ej: María Pérez (madre) 0412-7654321"
+                aria-invalid={!!errors.emergencyContact}
+              />
+              <span className="text-xs text-gray-400">Nombre y teléfono de la persona a contactar en caso de emergencia.</span>
+              {errors.emergencyContact && <span className="error">{errors.emergencyContact.message}</span>}
+            </div>
+            <TurnstileWidget sitekey="0x4AAAAAABjQeI7rlk0t6Vs0"></TurnstileWidget>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="mt-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded transition flex items-center justify-center gap-2"
+            >
+              {submitting && (
+                <span className="loader border-white border-t-green-500"></span>
+              )}
+              {submitting ? "Registrando..." : "Registrar"}
+            </button>
+          </form>
+        </div>
       </div>
       {/* Lista de participantes */}
       <div className="w-full max-w-md mt-8 bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
